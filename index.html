@@ -1,0 +1,161 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Distributed SOC Matrix Showcase</title>
+  <link rel="stylesheet" href="/css/main.min.fe8dc560fccb53a458b0db19ccb7b265764ac46b68596b7e099c6793054dd457.css">
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=Share+Tech+Mono&display=swap');
+    body {
+      background-color: #000;
+      color: #00ff41;
+      font-family: 'Share Tech Mono', monospace;
+      padding: 2rem;
+    }
+    h1, h2 {
+      color: #39ff14;
+    }
+    .phase {
+      border-left: 4px solid #00ff41;
+      margin: 2rem 0;
+      padding-left: 1rem;
+      background-color: rgba(0, 255, 65, 0.1);
+      box-shadow: 0 0 15px #00ff41;
+      padding: 1rem;
+      border-radius: 8px;
+    }
+    .tag { font-weight: bold; color: #ff00f2; }
+    .location { font-style: italic; color: #72ffbc; }
+    a.button {
+      color: #000;
+      background-color: #00ff41;
+      padding: 0.5rem 1rem;
+      text-decoration: none;
+      border-radius: 3px;
+      font-weight: bold;
+    }
+    a.button:hover {
+      background-color: #00cc36;
+    }
+    footer {
+      margin-top: 4rem;
+      font-size: 0.9rem;
+      color: #00ff41;
+    }
+    .intro, .lessons {
+      background-color: rgba(0, 255, 65, 0.05);
+      border-left: 4px solid #39ff14;
+      padding: 1rem;
+      margin-bottom: 3rem;
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <h1>Distributed SOC Master Plan</h1>
+    <p><span class="tag">Architecture:</span> Dockerized servers at <span class="location">Location A</span>, remote endpoints at <span class="location">Location B</span>, unified via <strong>Twingate</strong>.</p>
+  </header>
+
+    <section class="intro">
+  <h2>Introduction</h2>
+   <p>In order to build a functional and practical distributed Security Operations Center (SOC) using open-source tools. The very first thing I did was deploy <strong>Twingate</strong> and confirm that it worked reliably. This ensured all remote agents could reach the main server using private IPv4 addresses over a secure tunnel. Establishing this communication layer was essential before moving on to deploy any monitoring or logging tools.</p>
+    <p>In every phase of this project, I sought out diverse methods and best practices to ensure I wasn't just making things work—I was making them work well, and understanding why they worked. Many times, I had to delete everything and start over from scratch. Not because I failed, but because I care about building clean, intentional architecture. I didn't want a "spaghetti setup" or an "arroz con mango"—I wanted clarity, structure, and a deep understanding of each moving part. Every reset brought greater comprehension and confidence.</p>
+    <p>As a network engineer, exploring these cybersecurity tools gave me a much deeper view into how defenders see the network. It allowed me to shift from focusing only on connectivity and performance, to also considering visibility, logging, and threat detection. This crossover between networking and security was key to understanding how modern SOCs operate at both the infrastructure and application level.</p>
+    <p>Once that foundation was stable, I proceeded to deploy <strong>Suricata</strong> to gain insight into the network. I learned how to configure interfaces in mirror mode, analyze <code>eve.json</code> logs, and extract meaningful signals from noisy traffic. This step taught me the value of baselining traffic and the challenges of detecting anomalies without context.</p>
+    <p>Next, I implemented <strong>Velociraptor</strong> on remote endpoints to improve visibility at the host level. Here, I faced the complexities of remote artifact collection and live forensic analysis. I learned how endpoints behave under attack, and how registry entries, persistence mechanisms, and suspicious processes often go unnoticed without EDR tooling. It also helped me understand the tradeoffs between visibility and performance.</p>
+    <p>With endpoint and network telemetry established, I deployed <strong>Wazuh</strong> as the SIEM. This was a critical step that brought everything together. I built custom decoders to ingest Suricata’s and Velociraptor’s data formats and began writing correlation rules. I learned how to align timestamps across tools, how to reduce noise, and how alert fatigue can arise quickly without careful tuning.</p>
+    <p>To provide deeper threat context, I then brought in <strong>OpenCTI</strong>. Mapping indicators and TTPs to MITRE ATT&CK helped me understand how to classify threats and how attribution and context improve decision-making. I learned that intelligence is not just about knowing what’s bad—it’s about connecting signals to known adversary behavior and campaigns.</p>
+    <p>For log processing, I decided to skip Filebeat and instead configured <strong>direct file access</strong> ingestion into Wazuh. This taught me about parsing performance, path monitoring, and how important structured logging is for automation. Custom JSON decoders required trial and error but ultimately allowed greater control and simplicity.</p>
+    <p>I then added <strong>Shuffle</strong> as a SOAR platform. This was my first exposure to automation at scale. Writing playbooks that triggered actions based on Wazuh alerts helped me understand how incident response can be standardized. I learned the difference between automating enrichment versus response, and the importance of modular, auditable workflows.</p>
+    <p>Finally, I deployed <strong>pfSense</strong> virtually in the remote network to segment traffic and add perimeter-level rules. This phase reinforced the necessity of defense in depth. It also revealed the limitations of detection when segmentation is not applied and the benefits of stopping lateral movement early.</p>
+    <p>Each phase was not just a deployment—it was a learning module. Combined, they formed an architecture that taught me how professional SOCs operate. I faced configuration issues, performance tuning, log ingestion errors, agent failures, and integration mismatches—all of which gave me insight into the real challenges of running security infrastructure.</p>
+    <p>This project is a blueprint not just for architecture, but for learning. It shows that you can build a functional SOC using open-source tools and determination—and more importantly, that understanding comes from doing.</p>
+  </section>
+
+  <section class="phase">
+    <h2>Phase 1 – Network Monitoring with Suricata</h2>
+    <ul>
+      <li>Installed on <span class="location">Location A</span></li>
+      <li>Passive inspection via mirrored interfaces</li>
+      <li>Logs: <code>eve.json</code> for threat telemetry</li>
+      <li><strong>Goal:</strong> Establish network visibility baseline</li>
+    </ul>
+  </section>
+
+  <section class="phase">
+    <h2>Phase 2 – Endpoint Visibility with Velociraptor</h2>
+    <ul>
+      <li>Server in <span class="location">Location A</span>, agents on Windows endpoints (<span class="location">Location B</span>)</li>
+      <li>Capabilities: live analysis, registry checks, forensic artifact collection</li>
+      <li><strong>Outcome:</strong> Threat hunting and high-fidelity insight</li>
+    </ul>
+  </section>
+
+  <section class="phase">
+    <h2>Phase 3 – SIEM with Wazuh</h2>
+    <ul>
+      <li>Centralized Wazuh manager in Docker</li>
+      <li>Ingests logs from agents, Suricata, Velociraptor</li>
+      <li>Uses custom decoders for JSON parsing</li>
+      <li><strong>Outcome:</strong> Real-time correlation and alerting</li>
+    </ul>
+  </section>
+
+  <section class="phase">
+    <h2>Phase 4 – Threat Intelligence with OpenCTI</h2>
+    <ul>
+      <li>Internal threat knowledge base (Dockerized)</li>
+      <li>Maps IOCs, TTPs, malware, actors to MITRE ATT&CK</li>
+      <li><strong>Goal:</strong> Enrich alerts with actionable context</li>
+    </ul>
+  </section>
+
+  <section class="phase">
+    <h2>Phase 5 – Unified Log Ingestion</h2>
+    <ul>
+      <li>Sources: <code>eve.json</code> (Suricata), Velociraptor artifacts</li>
+      <li>Ingested via direct file access, no Filebeat</li>
+      <li><strong>Result:</strong> Unified timeline and activity correlation</li>
+    </ul>
+  </section>
+
+  <section class="phase">
+    <h2>Phase 6 – Security Orchestration with Shuffle</h2>
+    <ul>
+      <li>SOAR platform running in Docker</li>
+      <li>Integrates with Wazuh for alert-triggered workflows</li>
+      <li>Automates responses: enrichment, containment, notifications</li>
+      <li><strong>Outcome:</strong> Faster MTTR via automation</li>
+    </ul>
+  </section>
+
+  <section class="phase">
+    <h2>Phase 7 – Remote Segmentation with pfSense</h2>
+    <ul>
+      <li>Virtualized firewall at <span class="location">Location B</span></li>
+      <li>Uses bridged adapter for real IP, defines firewall rules</li>
+      <li><strong>Optional:</strong> Inline Suricata for perimeter inspection</li>
+      <li><strong>Goal:</strong> Network segmentation and lateral movement defense</li>
+    </ul>
+  </section>
+
+  <section class="lessons">
+    <h2>Lessons Learned & Recommendations</h2>
+    <ul>
+      <li>Always validate log formats early—structure impacts everything downstream.</li>
+      <li>Keep network segmentation in mind from day one; retrofitting it is complex.</li>
+      <li>SOAR isn’t just automation—it’s standardization. Even small playbooks pay off.</li>
+      <li>Threat Intelligence makes more sense when alerts already have context; don’t start there.</li>
+      <li>Document everything as you go. Reproducibility is as important as results.</li>
+      <li>If using a single central node (like Kali Purple), consider hardware limitations. Hosting multiple high-performance containers (Wazuh, Velociraptor, OpenCTI, Suricata, and Shuffle) led to notable performance degradation—especially memory pressure and I/O latency. This experience emphasized the need to distribute workloads or scale hardware when simulating production-level SOC functions.</li>
+    </ul>
+    <p><strong>Final Thoughts:</strong> This project challenged me at every level. I had to navigate dependency issues, failed builds, conflicting network routes, and tools that didn’t always play well together. Sometimes things broke without clear explanation—and fixing them taught me more than the initial setup ever could. Each problem became a doorway to deeper understanding. I’ve gained not only technical knowledge of these tools but also a mindset of iteration and intentional design. Most importantly, I now see how the convergence of networking and security is essential for building resilient infrastructures. To anyone pursuing cybersecurity seriously: don’t just read—build. Don’t just install—understand. That’s where the real learning lives.</p>
+    <p><strong>What's Next:</strong> After completing this project, my next goal is to optimize the server infrastructure—especially improving performance and resource allocation, so tools like Wazuh and OpenCTI can run without bottlenecks. Once the SOC is stable and responsive, I plan to deepen my knowledge in offensive security by learning all phases of penetration testing. Eventually, I want to simulate real-world attacks against my own SOC to see how well it detects, correlates, and responds. See you in the next project!</p>
+  
+
+  <footer>
+    <p>© 2025 Del Risco Technologies</p>
+  </footer>
+</body>
+</html>
