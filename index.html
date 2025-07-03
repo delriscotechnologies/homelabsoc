@@ -67,8 +67,7 @@
     <p>With endpoint and network telemetry established, I deployed <strong>Wazuh</strong> as the SIEM. This was a critical step that brought everything together. I built custom decoders to ingest Suricata’s and Velociraptor’s data formats and began writing correlation rules. I learned how to align timestamps across tools, how to reduce noise, and how alert fatigue can arise quickly without careful tuning.</p>
     <p>To provide deeper threat context, I then brought in <strong>OpenCTI</strong>. Mapping indicators and TTPs to MITRE ATT&CK helped me understand how to classify threats and how attribution and context improve decision-making. I learned that intelligence is not just about knowing what’s bad—it’s about connecting signals to known adversary behavior and campaigns.</p>
     <p>For log processing, I decided to skip Filebeat and instead configured <strong>direct file access</strong> ingestion into Wazuh. This taught me about parsing performance, path monitoring, and how important structured logging is for automation. Custom JSON decoders required trial and error but ultimately allowed greater control and simplicity.</p>
-    <p>I then added <strong>Shuffle</strong> as a SOAR platform. This was my first exposure to automation at scale. Writing playbooks that triggered actions based on Wazuh alerts helped me understand how incident response can be standardized. I learned the difference between automating enrichment versus response, and the importance of modular, auditable workflows.</p>
-    <p>Finally, I deployed <strong>pfSense</strong> virtually in the remote network to segment traffic and add perimeter-level rules. This phase reinforced the necessity of defense in depth. It also revealed the limitations of detection when segmentation is not applied and the benefits of stopping lateral movement early.</p>
+    <p>Finally, I added <strong>Shuffle</strong> as a SOAR platform. This was my first exposure to automation at scale. Writing playbooks that triggered actions based on Wazuh alerts helped me understand how incident response can be standardized. I learned the difference between automating enrichment versus response, and the importance of modular, auditable workflows.</p>
     <p>Each phase was not just a deployment—it was a learning module. Combined, they formed an architecture that taught me how professional SOCs operate. I faced configuration issues, performance tuning, log ingestion errors, agent failures, and integration mismatches—all of which gave me insight into the real challenges of running security infrastructure.</p>
     <p>This project is a blueprint not just for architecture, but for learning. It shows that you can build a functional SOC using open-source tools and determination—and more importantly, that understanding comes from doing.</p>
   </section>
@@ -130,15 +129,6 @@
     </ul>
   </section>
 
-  <section class="phase">
-    <h2>Phase 7 – Remote Segmentation with pfSense</h2>
-    <ul>
-      <li>Virtualized firewall at <span class="location">Location B</span></li>
-      <li>Uses bridged adapter for real IP, defines firewall rules</li>
-      <li><strong>Optional:</strong> Inline Suricata for perimeter inspection</li>
-      <li><strong>Goal:</strong> Network segmentation and lateral movement defense</li>
-    </ul>
-  </section>
 
   <section class="lessons">
     <h2>Lessons Learned & Recommendations</h2>
@@ -154,6 +144,7 @@
     <p><strong>What's Next:</strong> After completing this project, my next goal is to optimize the server infrastructure—especially improving performance and resource allocation, so tools like Wazuh and OpenCTI can run without bottlenecks. Once the SOC is stable and responsive, I plan to deepen my knowledge in offensive security by learning all phases of penetration testing. Eventually, I want to simulate real-world attacks against my own SOC to see how well it detects, correlates, and responds. See you in the next project!</p>
   
 
+    <p>Thank you for reading! </p>
   <footer>
     <p>© 2025 Del Risco Technologies</p>
   </footer>
