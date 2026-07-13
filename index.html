@@ -3,8 +3,9 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="referrer" content="no-referrer">
+  <meta http-equiv="Content-Security-Policy" content="default-src 'none'; script-src 'none'; style-src 'unsafe-inline' https://fonts.googleapis.com; font-src https://fonts.gstatic.com; img-src 'self' data:; connect-src 'none'; object-src 'none'; frame-src 'none'; base-uri 'none'; form-action 'none'; upgrade-insecure-requests">
   <title>Distributed SOC Matrix Showcase</title>
-  <link rel="stylesheet" href="/css/main.min.fe8dc560fccb53a458b0db19ccb7b265764ac46b68596b7e099c6793054dd457.css">
   <style>
     @import url('https://fonts.googleapis.com/css2?family=Share+Tech+Mono&display=swap');
     body {
@@ -49,6 +50,12 @@
       padding: 1rem;
       margin-bottom: 3rem;
     }
+    .security {
+      border-left: 4px solid #72ffbc;
+      background-color: rgba(114, 255, 188, 0.08);
+      padding: 1rem;
+      margin: 2rem 0;
+    }
   </style>
 </head>
 <body>
@@ -65,11 +72,22 @@
     <p>Once that foundation was stable, I proceeded to deploy <strong>Suricata</strong> to gain insight into the network. I learned how to configure interfaces in mirror mode, analyze <code>eve.json</code> logs, and extract meaningful signals from noisy traffic. This step taught me the value of baselining traffic and the challenges of detecting anomalies without context.</p>
     <p>Next, I implemented <strong>Velociraptor</strong> on remote endpoints to improve visibility at the host level. Here, I faced the complexities of remote artifact collection and live forensic analysis. I learned how endpoints behave under attack, and how registry entries, persistence mechanisms, and suspicious processes often go unnoticed without EDR tooling. It also helped me understand the tradeoffs between visibility and performance.</p>
     <p>With endpoint and network telemetry established, I deployed <strong>Wazuh</strong> as the SIEM. This was a critical step that brought everything together. I built custom decoders to ingest Suricata’s and Velociraptor’s data formats and began writing correlation rules. I learned how to align timestamps across tools, how to reduce noise, and how alert fatigue can arise quickly without careful tuning.</p>
-    <p>To provide deeper threat context, I then brought in <strong>OpenCTI</strong>. Mapping indicators and TTPs to MITRE ATT&CK helped me understand how to classify threats and how attribution and context improve decision-making. I learned that intelligence is not just about knowing what’s bad—it’s about connecting signals to known adversary behavior and campaigns.</p>
+    <p>To provide deeper threat context, I then brought in <strong>OpenCTI</strong>. Mapping indicators and TTPs to MITRE ATT&amp;CK helped me understand how to classify threats and how attribution and context improve decision-making. I learned that intelligence is not just about knowing what’s bad—it’s about connecting signals to known adversary behavior and campaigns.</p>
     <p>For log processing, I decided to skip Filebeat and instead configured <strong>direct file access</strong> ingestion into Wazuh. This taught me about parsing performance, path monitoring, and how important structured logging is for automation. Custom JSON decoders required trial and error but ultimately allowed greater control and simplicity.</p>
     <p>Finally, I added <strong>Shuffle</strong> as a SOAR platform. This was my first exposure to automation at scale. Writing playbooks that triggered actions based on Wazuh alerts helped me understand how incident response can be standardized. I learned the difference between automating enrichment versus response, and the importance of modular, auditable workflows.</p>
     <p>Each phase was not just a deployment—it was a learning module. Combined, they formed an architecture that taught me how professional SOCs operate. I faced configuration issues, performance tuning, log ingestion errors, agent failures, and integration mismatches—all of which gave me insight into the real challenges of running security infrastructure.</p>
     <p>This project is a blueprint not just for architecture, but for learning. It shows that you can build a functional SOC using open-source tools and determination—and more importantly, that understanding comes from doing.</p>
+  </section>
+
+  <section class="security">
+    <h2>Security Controls</h2>
+    <ul>
+      <li>Segment management, telemetry, endpoint, and attacker-lab traffic into separate trust zones.</li>
+      <li>Grant Twingate access per resource and user instead of exposing entire private subnets.</li>
+      <li>Use TLS certificate validation for every agent-to-server and service-to-service connection.</li>
+      <li>Store API keys and service credentials in secret files or a secrets manager, never in images, Compose files, or Git.</li>
+      <li>Restrict administrative interfaces to the management zone and keep every container image intentionally pinned and updated.</li>
+    </ul>
   </section>
 
   <section class="phase">
@@ -105,7 +123,7 @@
     <h2>Phase 4 – Threat Intelligence with OpenCTI</h2>
     <ul>
       <li>Internal threat knowledge base (Dockerized)</li>
-      <li>Maps IOCs, TTPs, malware, actors to MITRE ATT&CK</li>
+      <li>Maps IOCs, TTPs, malware, actors to MITRE ATT&amp;CK</li>
       <li><strong>Goal:</strong> Enrich alerts with actionable context</li>
     </ul>
   </section>
@@ -131,7 +149,7 @@
 
 
   <section class="lessons">
-    <h2>Lessons Learned & Recommendations</h2>
+    <h2>Lessons Learned &amp; Recommendations</h2>
     <ul>
       <li>Always validate log formats early—structure impacts everything downstream.</li>
       <li>Keep network segmentation in mind from day one; retrofitting it is complex.</li>
@@ -146,7 +164,7 @@
 
   <p>Thank you for reading! </p>
   <footer>
-    <p>© 2025 Del Risco Technologies</p>
+    <p>© 2026 Del Risco Technologies</p>
   </footer>
 </body>
 </html>
