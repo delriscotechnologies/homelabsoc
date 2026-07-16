@@ -10,7 +10,7 @@
   const update = () => {
     const scrollRange = document.documentElement.scrollHeight - window.innerHeight;
     const ratio = scrollRange > 0 ? Math.min(1, Math.max(0, window.scrollY / scrollRange)) : 1;
-    fill.style.transform = `scaleY(${ratio})`;
+    fill.style.transform = `scaleX(${ratio})`;
     progress.setAttribute('aria-valuenow', String(Math.round(ratio * 100)));
     frameRequested = false;
   };
