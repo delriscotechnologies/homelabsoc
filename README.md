@@ -24,4 +24,3 @@ The lab combines Suricata for network telemetry, Velociraptor for endpoint visib
 - [Wazuh documentation](https://documentation.wazuh.com/current/)
 - [OpenCTI repository](https://github.com/OpenCTI-Platform/opencti)
 - [Shuffle repository](https://github.com/Shuffle/Shuffle)
-- [MITRE ATT&CK](https://attack.mitre.org/)
