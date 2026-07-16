@@ -25,19 +25,6 @@ The lab combines Suricata for network telemetry, Velociraptor for endpoint visib
 5. **Unified ingestion** - normalize network and endpoint data without adding an unnecessary shipping layer.
 6. **Response automation** - use Shuffle workflows for enrichment, notifications, and controlled response actions.
 
-## Scope and Safeguards
-
-- Separate management, telemetry, endpoint, and attacker-lab traffic into distinct trust zones.
-- Grant Twingate access per resource and user instead of exposing entire private subnets.
-- Validate TLS certificates for agent-to-server and service-to-service connections.
-- Keep API keys, service credentials, tokens, and private endpoints out of images, Compose files, screenshots, and Git.
-- Restrict administrative interfaces to the management zone and require strong authentication.
-- Sanitize logs, alerts, endpoint artifacts, hostnames, addresses, and screenshots before publishing documentation.
-- Pin container images and automation dependencies deliberately, then review updates before deployment.
-- Monitor memory, storage, log growth, and I/O pressure; Wazuh, OpenCTI, Velociraptor, Suricata, and Shuffle can exceed the capacity of a single small host.
-- Treat automated containment as a controlled lab capability and require human approval for disruptive actions.
-- The HTML page is documentation only; it does not deploy or configure the SOC automatically.
-
 ## References
 
 - [Twingate documentation](https://www.twingate.com/docs)
