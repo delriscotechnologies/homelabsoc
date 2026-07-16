@@ -5,9 +5,8 @@
 </p>
 
 <p align="center">
-  <a href="#how-it-works">Architecture</a> |
   <a href="#scope-and-safeguards">Safeguards</a> |
-  <a href="./index.html">Full Write-Up</a>
+  <a href="https://delriscotechnologies.github.io/homelabsoc/">Full Write-Up</a>
 </p>
 
 ---
@@ -17,24 +16,6 @@ HomeLabSOC documents a distributed security operations lab spanning two location
 The lab combines Suricata for network telemetry, Velociraptor for endpoint visibility and forensic collection, Wazuh for SIEM correlation, OpenCTI for threat context, and Shuffle for response workflows. This repository contains the project write-up and security guidance; it does not contain deployment automation, service configurations, credentials, captured evidence, or production-ready infrastructure.
 
 > Build and operate this lab only on systems and networks you own or are explicitly authorized to test. Security telemetry can contain credentials, private addresses, host details, alerts, forensic artifacts, and other sensitive evidence; never commit real lab data to a public repository.
-
-## How It Works
-
-```text
-Location B
-  Windows endpoints
-  Velociraptor agents
-          |
-          | private access through Twingate
-          v
-Location A
-  Mirrored traffic --> Suricata --> eve.json --------+
-  Endpoint agents --> Velociraptor --> artifacts -----+--> Wazuh SIEM --> alerts --> Shuffle
-
-  OpenCTI --> indicators and MITRE ATT&CK context --> analyst enrichment
-```
-
-Twingate establishes the private communication layer before monitoring services are introduced. Suricata observes mirrored network traffic and writes structured events to `eve.json`, while Velociraptor collects endpoint artifacts from authorized clients. Wazuh ingests the available telemetry through direct file access, correlates activity, and generates alerts. OpenCTI adds indicator and ATT&CK context, and Shuffle turns selected alerts into auditable enrichment, notification, or containment workflows.
 
 ## Lab Phases
 
@@ -57,13 +38,6 @@ Twingate establishes the private communication layer before monitoring services 
 - Monitor memory, storage, log growth, and I/O pressure; Wazuh, OpenCTI, Velociraptor, Suricata, and Shuffle can exceed the capacity of a single small host.
 - Treat automated containment as a controlled lab capability and require human approval for disruptive actions.
 - The HTML page is documentation only; it does not deploy or configure the SOC automatically.
-
-## Repository Contents
-
-- [`index.html`](./index.html) - full project narrative, architecture phases, controls, and lessons learned.
-- [`SECURITY.md`](./SECURITY.md) - guidance for reporting security concerns without exposing sensitive details.
-- [`.github/workflows/html.yml`](./.github/workflows/html.yml) - validates `index.html` on pushes and pull requests.
-- [`.github/dependabot.yml`](./.github/dependabot.yml) - checks GitHub Actions dependencies for weekly updates.
 
 ## References
 
