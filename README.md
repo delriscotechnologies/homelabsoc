@@ -16,15 +16,6 @@ The lab combines Suricata for network telemetry, Velociraptor for endpoint visib
 
 > Build and operate this lab only on systems and networks you own or are explicitly authorized to test. Security telemetry can contain credentials, private addresses, host details, alerts, forensic artifacts, and other sensitive evidence; never commit real lab data to a public repository.
 
-## Lab Phases
-
-1. **Network visibility** - establish a traffic baseline with Suricata and `eve.json`.
-2. **Endpoint visibility** - collect forensic artifacts and support threat hunting with Velociraptor.
-3. **SIEM correlation** - centralize telemetry and tune Wazuh decoders and rules.
-4. **Threat intelligence** - connect indicators and TTPs to MITRE ATT&CK context with OpenCTI.
-5. **Unified ingestion** - normalize network and endpoint data without adding an unnecessary shipping layer.
-6. **Response automation** - use Shuffle workflows for enrichment, notifications, and controlled response actions.
-
 ## References
 
 - [Twingate documentation](https://www.twingate.com/docs)
