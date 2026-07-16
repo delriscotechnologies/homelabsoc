@@ -2,16 +2,14 @@
   'use strict';
 
   const progress = document.querySelector('[data-reading-progress]');
-  const fill = progress?.querySelector('span');
-  if (!progress || !fill) return;
+  if (!progress) return;
 
   let frameRequested = false;
 
   const update = () => {
     const scrollRange = document.documentElement.scrollHeight - window.innerHeight;
     const ratio = scrollRange > 0 ? Math.min(1, Math.max(0, window.scrollY / scrollRange)) : 1;
-    fill.style.transform = `scaleX(${ratio})`;
-    progress.setAttribute('aria-valuenow', String(Math.round(ratio * 100)));
+    progress.value = Math.round(ratio * 100);
     frameRequested = false;
   };
 
