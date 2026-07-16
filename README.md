@@ -5,7 +5,6 @@
 </p>
 
 <p align="center">
-  <a href="#scope-and-safeguards">Safeguards</a> |
   <a href="https://delriscotechnologies.github.io/homelabsoc/">Full Write-Up</a>
 </p>
 
