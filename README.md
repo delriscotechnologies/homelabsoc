@@ -10,9 +10,22 @@
 
 ---
 
-HomeLabSOC documents a distributed security operations lab spanning two locations. Location A hosts the central monitoring and analysis services, Location B contains remote Windows endpoints, and Twingate provides private access between authorized resources without exposing the lab directly to the internet.
+HomeLabSOC documents a distributed security operations lab spanning two locations. Twingate provides private, resource-level access between the locations without publishing the lab services directly to the internet.
 
-The lab combines Suricata for network telemetry, Velociraptor for endpoint visibility and forensic collection, Wazuh for SIEM correlation, OpenCTI for threat context, and Shuffle for response workflows. This repository contains the project write-up and security guidance; it does not contain deployment automation, service configurations, credentials, captured evidence, or production-ready infrastructure.
+## Architecture
+
+| Component | Location | Purpose |
+| --- | --- | --- |
+| Suricata | A | Network telemetry and `eve.json` events |
+| Velociraptor | A and B | Endpoint visibility and forensic collection |
+| Wazuh | A | SIEM ingestion, decoding, and correlation |
+| OpenCTI | A | Threat intelligence context |
+| Shuffle | A | Alert-driven response workflows |
+| Windows endpoints | B | Remote telemetry sources |
+
+## Scope
+
+This repository contains the project write-up and security guidance. It does not contain deployment automation, service configurations, credentials, captured evidence, or production-ready infrastructure.
 
 > Build and operate this lab only on systems and networks you own or are explicitly authorized to test. Security telemetry can contain credentials, private addresses, host details, alerts, forensic artifacts, and other sensitive evidence; never commit real lab data to a public repository.
 
