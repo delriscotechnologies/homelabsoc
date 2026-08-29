@@ -82,16 +82,16 @@
   <div class="reading-progress" data-reading-progress aria-hidden="true"><span></span></div>
   <header>
     <h1>Distributed SOC Master Plan</h1>
-    <p><span class="tag">Architecture:</span> Dockerized servers at <span class="location">Location A</span>, remote endpoints at <span class="location">Location B</span>, unified via <strong>Twingate</strong>.</p>
+    <p><span class="tag">Architecture:</span> Dockerized servers at <span class="location">Location A</span>, remote endpoints at <span class="location">Location B</span>, with private resource access through <strong>Twingate</strong>.</p>
   </header>
 
     <section class="intro">
   <h2>Introduction</h2>
-   <p>The very first thing I did was deploy <strong>Twingate</strong> and confirm that it worked reliably. This ensured all remote agents could reach the main server using private IPv4 addresses over a secure tunnel. Establishing this communication layer was essential before moving on to deploy any monitoring or logging tools.</p>
+   <p>The very first thing I did was deploy <strong>Twingate</strong> and confirm that authorized remote endpoints could reach the required lab resources without exposing those services directly to the internet. Establishing this private access layer was essential before moving on to monitoring and logging tools.</p>
     <p>In every phase of this project, I sought out diverse methods and best practices to ensure I wasn't just making things work—I was making them work well, and understanding why they worked. Many times, I had to delete everything and start over from scratch. Not because I failed, but because I care about building clean, intentional architecture. I didn't want a "spaghetti setup" or an "arroz con mango"—I wanted clarity, structure, and a deep understanding of each moving part. Every reset brought greater comprehension and confidence.</p>
     <p>As a systems administrator, exploring these cybersecurity tools gave me a much deeper view into how defenders see the network. It allowed me to shift from focusing only on connectivity and performance, to also considering visibility, logging, and threat detection. This crossover between networking and security was key to understanding how modern SOCs operate at both the infrastructure and application level.</p>
     <p>Once that foundation was stable, I proceeded to deploy <strong>Suricata</strong> to gain insight into the network. I learned how to configure interfaces in mirror mode, analyze <code>eve.json</code> logs, and extract meaningful signals from noisy traffic. This step taught me the value of baselining traffic and the challenges of detecting anomalies without context.</p>
-    <p>Next, I implemented <strong>Velociraptor</strong> on remote endpoints to improve visibility at the host level. Here, I faced the complexities of remote artifact collection and live forensic analysis. I learned how endpoints behave under attack, and how registry entries, persistence mechanisms, and suspicious processes often go unnoticed without EDR tooling. It also helped me understand the tradeoffs between visibility and performance.</p>
+    <p>Next, I implemented <strong>Velociraptor</strong> on remote endpoints to improve visibility at the host level. Here, I faced the complexities of remote artifact collection and live forensic analysis. I learned how endpoints behave under attack, and how registry entries, persistence mechanisms, and suspicious processes can go unnoticed without sufficient endpoint telemetry. It also helped me understand the tradeoffs between visibility and performance.</p>
     <p>With endpoint and network telemetry established, I deployed <strong>Wazuh</strong> as the SIEM. This was a critical step that brought everything together. I built custom decoders to ingest Suricata’s and Velociraptor’s data formats and began writing correlation rules. I learned how to align timestamps across tools, how to reduce noise, and how alert fatigue can arise quickly without careful tuning.</p>
     <p>To provide deeper threat context, I then brought in <strong>OpenCTI</strong>. Mapping indicators and TTPs to MITRE ATT&amp;CK helped me understand how to classify threats and how attribution and context improve decision-making. I learned that intelligence is not just about knowing what’s bad—it’s about connecting signals to known adversary behavior and campaigns.</p>
     <p>For log processing, I decided to skip Filebeat and instead configured <strong>direct file access</strong> ingestion into Wazuh. This taught me about parsing performance, path monitoring, and how important structured logging is for automation. Custom JSON decoders required trial and error but ultimately allowed greater control and simplicity.</p>
@@ -126,7 +126,7 @@
     <ul>
       <li>Server in <span class="location">Location A</span>, agents on Windows endpoints (<span class="location">Location B</span>)</li>
       <li>Capabilities: live analysis, registry checks, forensic artifact collection</li>
-      <li><strong>Outcome:</strong> Threat hunting and high-fidelity insight</li>
+      <li><strong>Outcome:</strong> Endpoint visibility for threat hunting and forensic review</li>
     </ul>
   </section>
 
@@ -135,8 +135,8 @@
     <ul>
       <li>Centralized Wazuh manager in Docker</li>
       <li>Ingests logs from agents, Suricata, Velociraptor</li>
-      <li>Uses custom decoders for JSON parsing</li>
-      <li><strong>Outcome:</strong> Real-time correlation and alerting</li>
+      <li>Uses Wazuh JSON decoding with custom rules or decoders where needed</li>
+      <li><strong>Outcome:</strong> Centralized correlation and alerting</li>
     </ul>
   </section>
 
@@ -164,7 +164,7 @@
       <li>SOAR platform running in Docker</li>
       <li>Integrates with Wazuh for alert-triggered workflows</li>
       <li>Automates responses: enrichment, containment, notifications</li>
-      <li><strong>Outcome:</strong> Faster MTTR via automation</li>
+      <li><strong>Goal:</strong> Reduce response time through repeatable automation</li>
     </ul>
   </section>
 
