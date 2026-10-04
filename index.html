@@ -105,7 +105,7 @@
     <ul>
       <li>Segment management, telemetry, endpoint, and attacker-lab traffic into separate trust zones.</li>
       <li>Grant Twingate access per resource and user instead of exposing entire private subnets.</li>
-      <li>Use TLS certificate validation for every agent-to-server and service-to-service connection.</li>
+      <li>Validate certificates on TLS connections. Wazuh 4.x agent event forwarding uses the Wazuh messages protocol with AES encryption; enrollment and other service connections have separate security settings.</li>
       <li>Store API keys and service credentials in secret files or a secrets manager, never in images, Compose files, or Git.</li>
       <li>Restrict administrative interfaces to the management zone and keep every container image intentionally pinned and updated.</li>
     </ul>
